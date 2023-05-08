@@ -1,10 +1,11 @@
 import express from "express";
-export const app = express();
-import { clientsController } from "./Controllers/clientsController.js"
-import { policiesController } from "./Controllers/policiesController.js" 
+import { registerClientsEndPoints } from "./Controllers/clientsController.js";
+import { registerPoliciesEndPoints } from "./Controllers/policiesController.js";
 
-app.use("/clients", clientsController);
-app.use("/policy", policiesController);
+const app = express();
+
+registerClientsEndPoints(app);
+registerPoliciesEndPoints(app);
 
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
