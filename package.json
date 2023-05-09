@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "API for fetching user data and linked policies.",
   "type": "module",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +14,11 @@
     "memory-cache": "^0.2.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.8",
+    "@babel/preset-env": "^7.21.5",
+    "@babel/register": "^7.21.0",
+    "babel-jest": "^29.5.0",
+    "esm": "^3.2.25",
     "jest": "^29.5.0"
   }
 }

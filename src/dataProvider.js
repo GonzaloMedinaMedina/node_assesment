@@ -9,19 +9,29 @@ const REGULAR_HEADERS =
 /**
  * Class to provide requested user data.
  */
-export class dataProvider
+export default class dataProvider
 {
     constructor(){}
+
+    /**
+     * Returns the cached data given a specific key.
+     * @param {"They key to be checked in cache"} key
+     * @returns "The cached data."
+     */
+    static getCachedData(key)
+    {
+        return cache.get(key);
+    }
 
     /**
      * Method to return the desired data collection idetifiend by a key name."
      * @param {"The key of the desired data collection to be managed through cache"} key 
      * @param {"The url of the data provider if no data is currently cached."} url 
-     * @returns "The desired data collection"
+     * @returns "The desired data collection."
      */
     static async getData(key, url)
     {
-        let cachedData = cache.get(key);
+        let cachedData = getCachedData(key);
         
         if (cachedData === null || cachedData === undefined)
         {
