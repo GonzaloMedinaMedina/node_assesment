@@ -1,27 +1,67 @@
-const regularHeaders = 
+import cache from "memory-cache";
+
+const THIRTY_MINUTES_IN_MS = 1800000;
+const REGULAR_HEADERS = 
 {
     'Content-Type': 'application/json'
 }
 
-export async function fetchData(url, headers = regularHeaders)
+/**
+ * Class to provide requested user data.
+ */
+export class dataProvider
 {
-    let result = undefined;
+    constructor(){}
 
-    await fetch(url,
+    /**
+     * Method to return the desired data collection idetifiend by a key name."
+     * @param {"The key of the desired data collection to be managed through cache"} key 
+     * @param {"The url of the data provider if no data is currently cached."} url 
+     * @returns "The desired data collection"
+     */
+    static async getData(key, url)
     {
-        headers: headers,
-        method: 'GET'       
-    })
-    .then(response => response.json())
-    .then(data => 
-    {
-        result = data;
-    })
-    .catch(error => 
-    {
-        console.error('Error fetching data: ' + error.stack);
-        return undefined;
-    })
+        let cachedData = cache.get(key);
+        
+        if (cachedData === null || cachedData === undefined)
+        {
+            cachedData = await this.fetchData(url);
+            if (cachedData !== null && cachedData !== undefined)
+            {
+                let cacheObject = { key: cachedData };
+                cache.put(key, cacheObject, THIRTY_MINUTES_IN_MS);
+            }
+        }
 
-    return result;
+        return cachedData;
+    }
+
+    /**
+     * Method that fetch data from a provider given a url
+     * @param {"The url to make the request."} url 
+     * @param {"The specific header object."} headers 
+     * @returns "The data in a json object."
+     */
+    static async fetchData(url, headers = REGULAR_HEADERS)
+    {
+        let result = undefined;
+
+        await fetch(url,
+        {
+            headers: headers,
+            method: 'GET'       
+        })
+        .then(response => response.json())
+        .then(data => 
+        {
+            result = data;
+        })
+        .catch(error => 
+        {
+            console.error('Error fetching data: ' + error.stack);
+            return undefined;
+        })
+
+        return result;
+    }
 }
