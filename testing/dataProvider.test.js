@@ -1,12 +1,22 @@
 import dataProvider from '../src/dataProvider.js';
 
 describe("dataProvider tests", () => {
-    
-    test('test', async () => 
+
+    test('getData must return current cached data of specific key and dont call fetchData method', async () => 
     {
-        let nonExistingKey = null,
-        nonExistingUrl = null;
-        const undefinedValue = await dataProvider.getData(nonExistingKey, nonExistingUrl);
-        expect(undefinedValue).toBe(undefined);
+        let mockedResult = "mocked result",
+            mockedKey = "mocked key";
+        dataProvider.getCachedData = jest.fn().mockImplementation((key) => 
+        {
+            return key == mockedKey ? mockedResult : null;
+        });
+
+        const spyfetchData = jest.spyOn(dataProvider, 'fetchData');
+
+        const result = await dataProvider.getData(mockedKey, null);
+
+        expect(dataProvider.getCachedData).toHaveBeenCalled();
+        expect(spyfetchData).toHaveBeenCalledTimes(0);
+        expect(result).toBe(mockedResult);
     });
 });

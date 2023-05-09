@@ -31,7 +31,7 @@ export default class dataProvider
      */
     static async getData(key, url)
     {
-        let cachedData = getCachedData(key);
+        let cachedData = this.getCachedData(key);
         
         if (cachedData === null || cachedData === undefined)
         {
