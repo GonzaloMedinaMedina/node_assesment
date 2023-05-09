@@ -11,6 +11,7 @@ const REGULAR_HEADERS =
  */
 export default class dataProvider
 {
+    static dataProviderCache = new cache.Cache();
     constructor(){}
 
     /**
@@ -20,7 +21,7 @@ export default class dataProvider
      */
     static getCachedData(key)
     {
-        return cache.get(key);
+        return this.dataProviderCache.get(key);
     }
 
     /**
@@ -39,7 +40,7 @@ export default class dataProvider
             if (cachedData !== null && cachedData !== undefined)
             {
                 let cacheObject = { key: cachedData };
-                cache.put(key, cacheObject, THIRTY_MINUTES_IN_MS);
+                this.dataProviderCache.put(key, cacheObject, THIRTY_MINUTES_IN_MS);
             }
         }
 
@@ -54,17 +55,10 @@ export default class dataProvider
      */
     static async fetchData(url, headers = REGULAR_HEADERS)
     {
-        let result = undefined;
-
-        await fetch(url,
+        const response = await fetch(url,
         {
             headers: headers,
             method: 'GET'       
-        })
-        .then(response => response.json())
-        .then(data => 
-        {
-            result = data;
         })
         .catch(error => 
         {
@@ -72,6 +66,6 @@ export default class dataProvider
             return undefined;
         })
 
-        return result;
+        return await response.json();
     }
 }
