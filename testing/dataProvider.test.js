@@ -1,4 +1,4 @@
-import dataProvider from '../src/dataProvider.js';
+import { dataProvider } from '../src/dataProvider.js';
 
 describe("dataProvider tests", () => {
 
