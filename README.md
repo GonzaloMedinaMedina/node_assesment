@@ -1,0 +1,5 @@
+- This project run a node server with an API with few endpoints.
+- In order to run the project node is required [https://nodejs.org/en]
+- After node installation, open a terminal in the root project path and run `npm install` in order to install all dependencies.
+- Run the server with `npm start`.
+- To try the API, execute the `requestTest.js` file and follow the instructions.
