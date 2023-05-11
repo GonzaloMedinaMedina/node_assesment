@@ -26,3 +26,11 @@ export function getResponseObject()
         responseHeader: 200
     };
 }
+
+export function getAccessDeniedResponseObject()
+{
+    return {
+        content: "Acces denied",
+        responseHeader: 403
+    };
+}

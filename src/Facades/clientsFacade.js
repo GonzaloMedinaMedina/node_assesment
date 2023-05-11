@@ -1,5 +1,5 @@
 import { clientsService } from '../Services/clientsService.js';
-import { getResponseObject } from "../Controllers/requestManager.js";
+import { getResponseObject, getAccessDeniedResponseObject } from "../Controllers/requestManager.js";
 
 /**
  * Class to manage access to clientsService
@@ -18,10 +18,7 @@ export class clientsFacade
             return responseObject;
         }
 
-        responseObject.responseHeader = 403;
-        responseObject.content = "Access Denied";
-
-        return responseObject;
+        return getAccessDeniedResponseObject();
     }
 
     static async getClientById(clientId, rol)
@@ -34,10 +31,7 @@ export class clientsFacade
             return responseObject;
         }
 
-        responseObject.responseHeader = 403;
-        responseObject.content = "Access Denied";
-
-        return responseObject;
+        return getAccessDeniedResponseObject();
     }
 
     static async getClientByName(clientName, rol)
@@ -50,9 +44,6 @@ export class clientsFacade
             return responseObject;
         }
 
-        responseObject.responseHeader = 403;
-        responseObject.content = "Access Denied";
-
-        return responseObject;
+        return getAccessDeniedResponseObject();
     }
 }

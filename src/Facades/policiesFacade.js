@@ -1,5 +1,5 @@
 import { policiesService } from "../Services/policiesService.js"
-import { getResponseObject } from "../Controllers/requestManager.js";
+import { getResponseObject, getAccessDeniedResponseObject } from "../Controllers/requestManager.js";
 /**
  * Class to manage access to policiesService
  */
@@ -16,9 +16,6 @@ export class policiesFacade
             return responseObject
         }
 
-        responseObject.responseHeader = 403;
-        responseObject.content = "Access Denied";
-
-        return responseObject;
+        return getAccessDeniedResponseObject();
     } 
 }
