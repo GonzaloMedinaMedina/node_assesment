@@ -1,12 +1,26 @@
-import { dataProvider } from '../dataProvider.js';
-const CLIENTS_URL = 'https://www.mocky.io/v2/5808862710000087232b75ac';
-const CLIENTS_KEY = 'clients';
+import { clientsService } from '../Services/clientsService.js';
+import { readRequestParameters } from './requestManager.js';
 
 export async function registerClientsEndPoints(app)
 {
-  app.get('/clients', async (req, res) => 
+  app.post('/client/byPolicyNumber', async(req, res) =>
   {
-    const data = await dataProvider.getData(CLIENTS_KEY, CLIENTS_URL);
-    res.send('first client endpoint ' + data.clients);
+    const requestData = await readRequestParameters(req);
+    var client = await clientsService.getClientByPolicyNumber(requestData.parameter);
+    res.end(JSON.stringify(client));
+  });
+
+  app.post('/client/byId', async (req, res) => 
+  {
+    const requestData = await readRequestParameters(req);
+    var client = await clientsService.getClientBy(clientsService.ID, requestData.parameter);
+    res.end(JSON.stringify(client));
+  });
+
+  app.post('/client/byUserName', async (req, res) =>
+  {
+    const requestData = await readRequestParameters(req);
+    var client = await clientsService.getClientBy(clientsService.NAME, requestData.parameter);
+    res.end(JSON.stringify(client));
   });
 }
