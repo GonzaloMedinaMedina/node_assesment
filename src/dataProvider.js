@@ -39,8 +39,7 @@ export class dataProvider
             cachedData = await this.fetchData(url);
             if (cachedData !== null && cachedData !== undefined)
             {
-                let cacheObject = { key: cachedData };
-                this.dataProviderCache.put(key, cacheObject, THIRTY_MINUTES_IN_MS);
+                this.dataProviderCache.put(key, cachedData, THIRTY_MINUTES_IN_MS);
             }
         }
 
