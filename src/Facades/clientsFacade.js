@@ -1,4 +1,6 @@
 import { clientsService } from '../Services/clientsService.js';
+import { getResponseObject } from "../Controllers/requestManager.js";
+
 /**
  * Class to manage access to clientsService
  */
@@ -8,31 +10,49 @@ export class clientsFacade
 
     static async getClientByPolicyNumber(policyNumber, rol)
     {
+        var responseObject = getResponseObject();
+
         if (rol == "admin")
         {
-            return await clientsService.getClientByPolicyNumber(policyNumber);
+            responseObject.content = await clientsService.getClientByPolicyNumber(policyNumber);
+            return responseObject;
         }
 
-        return undefined;
+        responseObject.responseHeader = 403;
+        responseObject.content = "Access Denied";
+
+        return responseObject;
     }
 
-    static async getClientById(clientId)
+    static async getClientById(clientId, rol)
     {
+        var responseObject = getResponseObject();
+     
         if (rol == "user" || rol == "admin")
         {
-            return await clientsService.getClientBy(clientsService.ID, clientId)
+            responseObject.content = await clientsService.getClientBy(clientsService.ID, clientId)
+            return responseObject;
         }
 
-        return undefined;
+        responseObject.responseHeader = 403;
+        responseObject.content = "Access Denied";
+
+        return responseObject;
     }
 
-    static async getClientByName(clientName)
+    static async getClientByName(clientName, rol)
     {
+        var responseObject = getResponseObject();
+
         if (rol == "user" || rol == "admin")
         {
-            return await clientsService.getClientBy(clientsService.NAME, clientName)
+            responseObject.content = await clientsService.getClientBy(clientsService.NAME, clientName)
+            return responseObject;
         }
 
-        return undefined;
+        responseObject.responseHeader = 403;
+        responseObject.content = "Access Denied";
+
+        return responseObject;
     }
 }

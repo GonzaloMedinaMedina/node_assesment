@@ -18,3 +18,11 @@ export function readRequestParameters(req)
 
   return promise;
 }
+
+export function getResponseObject()
+{
+    return {
+        content: undefined,
+        responseHeader: 200
+    };
+}

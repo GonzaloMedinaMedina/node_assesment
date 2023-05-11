@@ -6,7 +6,10 @@ export function registerPoliciesEndPoints(app)
   app.post('/policies/ByUserName', async (req, res) =>
   {
     const requestData = await readRequestParameters(req);
-    var userPolicies = await policiesFacade.getPoliciesWithClientName(requestData.parameter, requestData.rol);
-    res.end(JSON.stringify(userPolicies));
+    
+    var responseObject = await policiesFacade.getPoliciesWithClientName(requestData.parameter, requestData.rol);
+    
+    res.writeHead(responseObject.responseHeader, {'Content-Type': 'text/plain'});
+    res.end(JSON.stringify(responseObject.content));
   });
 }
