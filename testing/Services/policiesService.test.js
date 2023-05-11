@@ -120,13 +120,13 @@ describe("policiesService tests", () =>
         expect(resultPolicies.length).toBe(2);    
     });
 
-    test("getPoliciesWithClientId must return all the policies with fakeClientId value", async () =>
+    test("getPoliciesWithClientName must return all the policies with fakeClientId value", async () =>
     {
         const fakeClient = createFakeClient("fakeClientId", "fakeName", "fakeEmail", "fakeRole");
 
         clientsService.getClientBy = jest.fn().mockImplementation((property, value) =>
         {
-            if (property === "id" && value === "fakeClientId")
+            if (property === "name" && value === "fakeClientName")
             {
                 return fakeClient;
             }
@@ -135,7 +135,7 @@ describe("policiesService tests", () =>
         const getPoliciesList = jest.spyOn(policiesService, 'getPoliciesList');
         const isPolicyProperty = jest.spyOn(policiesService, 'isPolicyProperty');
 
-        const resultPolicies = await policiesService.getPoliciesWithClientId("fakeClientId");
+        const resultPolicies = await policiesService.getPoliciesWithClientName("fakeClientName");
         expect(getPoliciesList).toHaveBeenCalled();
         expect(isPolicyProperty).toHaveBeenCalled();
         expect(resultPolicies.length).toBe(2);    

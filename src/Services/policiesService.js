@@ -92,9 +92,16 @@ export class policiesService
      * @param {"ClientId value to be searched."} clientId 
      * @returns All the Policies with the clientId value.
      */
-    static async getPoliciesWithClientId(clientId)
+    static async getPoliciesWithClientName(clientName)
     {
-        const client = await clientsService.getClientBy(clientsService.ID, clientId);
-        return await this.getPoliciesBy(this.CLIENT_ID, client[clientsService.ID]);
+        const client = await clientsService.getClientBy(clientsService.NAME, clientName);
+
+        if (client !== undefined)
+        {
+            return await this.getPoliciesBy(this.CLIENT_ID, client[clientsService.ID]);
+
+        }
+
+        return undefined;
     }
 }
