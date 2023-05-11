@@ -9,7 +9,7 @@ const REGULAR_HEADERS =
 /**
  * Class to provide requested user data.
  */
-export default class dataProvider
+export class dataProvider
 {
     static dataProviderCache = new cache.Cache();
     constructor(){}
